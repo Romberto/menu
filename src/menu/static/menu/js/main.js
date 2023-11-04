@@ -43,16 +43,18 @@ window.addEventListener('load', function(){
         e.addEventListener('click', function(elem){
             elem.preventDefault()
             let ulList = this.nextElementSibling;
-            console.log(ulList.classList)
+
             if (ulList.classList.contains('show')){
                 ulList.classList.remove('show')
             }else{
                 ulList.classList.add('show')
-                console.log(ulList.classList)
+
 
             }
         })
     });
+
+
 
 
 

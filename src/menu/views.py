@@ -8,8 +8,9 @@ from .models import MenuItem
 class MainView(View):
 
     def get(self, request):
-        current_url = request.path
-        return render(request, "menu/main.html", {'current_url': current_url})
+        curret_url = request.path
+        print(curret_url)
+        return render(request, "menu/main.html", {'curret_url': curret_url})
 
 
 class DetailItemView(DetailView):

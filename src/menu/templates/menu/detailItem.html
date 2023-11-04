@@ -2,57 +2,27 @@
 
 {% block css %}
 {% load static %}
-    <link rel="stylesheet" href="{% static 'menu/css/style.css'%}">
+<link rel="stylesheet" href="{% static 'menu/css/style.css'%}">
 {% endblock %}
 {% block title%} item_{{object.id}} {% endblock%}
 
 {% block body %}
 
-<h1>{{object.title}}</h1>
+<h1 class="text-center mb-2">{{object.title}}</h1>
 {% load menu_tag %}
 
 {{curret_url}}
 
 <div class="wrapper container">
-    <div class="mb-3">{{current_url}}</div>
-    {% draw_menu 'instrument' as menu %}
 
     <ul class="d-flex justify-content-between align-items-start">
-        {% for item in menu %}
-
-        <li class="position-relative">
-            {% if item.sub_menu %}
-            <a href="#" class="btn btn-info menu__item menu__select">{{ item.title }}</a>
-            <ul class="menu__inner_list">
-                {% for sub_item in item.sub_menu %}
-                <li class="position-relative">
-                    {% if sub_item.sub_menu %}
-                    <a href="#" class="menu__inner_item btn btn-danger mb-1 js_menu__inner_item">{{ sub_item.title }}</a>
-                    <ul class="menu__inner_item_list">
-                        {% for sub_sub_item in sub_item.sub_menu %}
-                        <li>
-                            <a href="{{sub_sub_item.url}}" class="btn btn-success  mb-1" id="{{sub_sub_item.id}}">{{ sub_sub_item.title }}!!!</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <a href="{{sub_item.url}}" class="btn btn-success mb-1 menu__inner_item mb-1">{{ sub_item.title }}</a>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <a href="{{item.url}}" class="btn btn-success menu__item">{{ item.title }}</a>
-            {% endif %}
-        </li>
-        {% endfor %}
+    {{ 'instrument'|draw_menu:request.path|safe }}
     </ul>
-    {% block js%}
-    <script type="text/javascript" src="{% static 'menu/js/main.js'%}"></script>
-    {% endblock%}
-
 </div>
 
 
+{% block js%}
+<script type="text/javascript" src="{% static 'menu/js/selected.js'%}"></script>
+{% endblock%}
 
 {% endblock%}
