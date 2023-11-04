@@ -9,10 +9,13 @@ class Menu(models.Model):
 
 
 class MenuItem(models.Model):
-    url = models.CharField(max_length=100, default='/elem')
+    url = models.CharField(max_length=100, default='default_url_item_menu')
     title = models.CharField(max_length=100)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.id}:{self.title}'
+        if self.parent:
+            return f'{self.id}:{self.title} - {self.parent}'
+        else:
+            return f"{self.id}:{self.title.upper()}"

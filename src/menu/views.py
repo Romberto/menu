@@ -9,7 +9,6 @@ class MainView(View):
 
     def get(self, request):
         curret_url = request.path
-        print(curret_url)
         return render(request, "menu/main.html", {'curret_url': curret_url})
 
 
@@ -23,3 +22,11 @@ class DetailItemView(DetailView):
         return context
 
 
+class AboutView(View):
+    def get(self, request):
+        return render(request, 'menu/about.html')
+
+
+class DefaultItemView(View):
+    def get(self, request):
+        return render(request, 'menu/default_item_menu.html')

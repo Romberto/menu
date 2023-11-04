@@ -12,7 +12,7 @@ register = template.Library()
 
 @register.filter
 def draw_menu(name_menu, current_url):
-    menu_items = MenuItem.objects.select_related('menu').filter(menu__name=name_menu)
+    menu_items = MenuItem.objects.select_related('menu', 'parent').filter(menu__name=name_menu)
     menu_structure = build_menu_structure(menu_items)
     html = ""
     for item in menu_structure:
@@ -33,28 +33,15 @@ def draw_menu(name_menu, current_url):
                             html += f'<li><a href="{sub_sub_item["url"]}" class="btn btn-success  mb-1" id="{sub_sub_item["id"]}">{sub_sub_item["title"]}</a></li>'
                     html += "</ul>"
                 else:
-                    html += f'<a href="{{sub_item.url}}" class="btn btn-success mb-1 menu__inner_item mb-1">{sub_item["title"]}</a>'
+                    html += f'<a href="{sub_item["url"]}" class="btn btn-success mb-1 menu__inner_item mb-1">{sub_item["title"]}</a>'
                 html += "</li>"
             html += '</ul>'
         else:
-            html += f'<a href="{item["url"]}" class="btn btn-success menu__item">{item["title"]}</a>'
+            html += f'<a href="{item["url"]}/" class="btn btn-success menu__item">{item["title"]}</a>'
             html += '</li>'
 
     return html
 
-
-# def build_menu_structure(menu_items, parent=None):
-#     menu_structure = []
-#
-#     for item in menu_items:
-#
-#         if item.parent == parent:
-#             sub_menu = build_menu_structure(menu_items, item)
-#             if sub_menu:
-#                 item.sub_menu = sub_menu
-#             menu_structure.append(item)
-#
-#     return menu_structure
 
 def build_menu_structure(menu_items, parent=None):
     menu_structure = []
@@ -75,16 +62,3 @@ def build_menu_structure(menu_items, parent=None):
             menu_structure.append(menu_item)
 
     return menu_structure
-
-
-@register.simple_tag
-def current_time(format_string):
-    return datetime.datetime.now().strftime(format_string)
-
-
-@register.filter
-def my_custom_html_fragment(status):
-    if status.lower() == "ok":
-        return """<div>status 200 OK.</div>"""
-    else:
-        return """<div>status 404. ERROR</div>"""
