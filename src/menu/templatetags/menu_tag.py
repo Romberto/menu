@@ -33,7 +33,7 @@ def draw_menu(name_menu, current_url):
                             html += f'<li><a href="{sub_sub_item["url"]}" class="btn btn-success  mb-1" id="{sub_sub_item["id"]}">{sub_sub_item["title"]}</a></li>'
                     html += "</ul>"
                 else:
-                    html += f'<a href="{sub_item["url"]}" class="btn btn-success mb-1 menu__inner_item mb-1">{sub_item["title"]}</a>'
+                    html += f'<a href="{sub_item["url"]}/" class="btn btn-success mb-1 menu__inner_item mb-1">{sub_item["title"]}</a>'
                 html += "</li>"
             html += '</ul>'
         else:
